@@ -74,11 +74,11 @@ PixDiff.prototype = {
      * @return {object}
      * @private
      */
-    mergeDefaultOptions: function (optionsA, optionsB) {
+    _mergeDefaultOptions: function (optionsA, optionsB, overwrite) {
         optionsB = (typeof optionsB === 'object') ? optionsB : {};
 
         Object.keys(optionsB).forEach(function (option) {
-            if (!optionsA.hasOwnProperty(option)) {
+            if (overwrite || !optionsA.hasOwnProperty(option)) {
                 optionsA[option] = optionsB[option];
             }
         });
@@ -197,7 +197,7 @@ PixDiff.prototype = {
                         imageOutputPath: path.join(this.basePath, 'diff', path.basename(tag)),
                         imageOutputLimit: BlinkDiff.OUTPUT_DIFFERENT
                     };
-                    return new BlinkDiff(this.mergeDefaultOptions(defaults, options)).runWithPromise();
+                    return new BlinkDiff(this.mergeDefaultOptions(defaults, options, true)).runWithPromise();
                 }.bind(this))
                 .then(function (result) {
                     return result;
@@ -242,7 +242,7 @@ PixDiff.prototype = {
                         imageOutputLimit: BlinkDiff.OUTPUT_DIFFERENT,
                         cropImageB: rect
                     };
-                    return new BlinkDiff(this.mergeDefaultOptions(defaults, options)).runWithPromise();
+                    return new BlinkDiff(this.mergeDefaultOptions(defaults, options, true)).runWithPromise();
                 }.bind(this))
                 .then(function (result) {
                     return result;
