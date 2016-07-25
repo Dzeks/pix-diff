@@ -74,7 +74,7 @@ PixDiff.prototype = {
      * @return {object}
      * @private
      */
-    _mergeDefaultOptions: function (optionsA, optionsB, overwrite) {
+    mergeDefaultOptions: function (optionsA, optionsB, overwrite) {
         optionsB = (typeof optionsB === 'object') ? optionsB : {};
 
         Object.keys(optionsB).forEach(function (option) {
